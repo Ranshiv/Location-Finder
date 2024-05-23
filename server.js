@@ -1,16 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use the port from the environment variable or default to 3000
 
 app.get('/track', async (req, res) => {
-  let userIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  
-  // Handle IPv6 localhost
-  if (userIp === '::1' || userIp === '127.0.0.1') {
-    userIp = '8.8.8.8'; // Google's public DNS IP, for testing purposes
-  }
-
+  const userIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(`User IP: ${userIp}`);
 
   try {
